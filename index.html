@@ -1,8 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Malla Curricular de Agronomía</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+
+        .ramo {
+            border: 2px solid #999;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            display: inline-block;
+            width: 200px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .ramo.habilitado {
+            border-color: #2a8;
+            background-color: #e0f7ea;
+        }
+
+        .ramo.aprobado {
+            background-color: #c5e1a5;
+            text-decoration: line-through;
+        }
+
+        .semestres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #total-sct {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
 <body>
 <h1>Malla Curricular de Agronomía</h1>
 
 <div class="semestres">
-    <!-- ... tus div .semestre aquí ... -->
+    <div class="ramo habilitado" data-prerequisitos="" id="MAT101" onclick="toggleAprobado(this)">
+        Matemática I (6 SCT)
+    </div>
+    <div class="ramo habilitado" data-prerequisitos="" id="BIO101" onclick="toggleAprobado(this)">
+        Biología General (5 SCT)
+    </div>
+    <div class="ramo" data-prerequisitos="MAT101" id="MAT102" onclick="toggleAprobado(this)">
+        Matemática II (6 SCT)
+    </div>
+    <div class="ramo" data-prerequisitos="BIO101,MAT101" id="QUIM101" onclick="toggleAprobado(this)">
+        Química General (5 SCT)
+    </div>
 </div>
 
 <h2>Total de Créditos Aprobados</h2>
@@ -55,7 +113,10 @@
     function actualizarEstados() {
         ramos.forEach(ramo => {
             if (ramo.classList.contains("aprobado")) return;
-            const prereqs = ramo.dataset.prerequisitos.split(',').filter(p => p);
+            const prereqs = ramo.dataset.prerequisitos
+                .split(',')
+                .map(p => p.trim())
+                .filter(p => p);
             const cumplidos = prereqs.every(p => localStorage.getItem(p) === "true");
             ramo.classList.toggle("habilitado", prereqs.length === 0 || cumplidos);
         });
@@ -64,3 +125,4 @@
     window.onload = cargarEstado;
 </script>
 </body>
+</html>
