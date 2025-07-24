@@ -1,190 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <title>Malla Curricular Agronomía</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fdfcf8;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #556b2f;
-    }
-
-    .semestres {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .semestre {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 10px;
-      width: 250px;
-    }
-
-    .semestre h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    .ramo {
-      border-radius: 6px;
-      padding: 10px;
-      margin-bottom: 10px;
-      background-color: #cccccc;
-      color: #000;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .ramo.habilitado {
-      background-color: #f5f5dc;
-    }
-
-    .ramo.aprobado {
-      background-color: #556b2f;
-      color: #fff;
-      text-decoration: line-through;
-    }
-
-    .ramo:hover {
-      opacity: 0.9;
-    }
-
-    #total-sct {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-top: 20px;
-      background: #eef4ea;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-    }
-  </style>
-</head>
 <body>
-  <h1>Malla Curricular de Agronomía</h1>
+<h1>Malla Curricular de Agronomía</h1>
 
-  <div class="semestres">
-    <div class="semestre">
-      <h2>I° semestre</h2>
-      <div class="ramo" data-prerequisitos="" id="AGRO085">PRÁCTICA DE INDUCCIÓN PROFESIONAL (5 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="CIDI115">EXPRESIÓN ORAL Y ESCRITA (2 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="CITI045">PRINCIPIOS DE GEOGRAFÍA FÍSICA (5 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="ICML035">FUNDAMENTOS DE BIOLOGÍA (5 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="MATM037">ÁLGEBRA (6 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="QUIM040">QUÍMICA GENERAL (6 SCT)</div>
-    </div>
-    <div class="semestre">
-      <h2>II° semestre</h2>
-      <div class="ramo" data-prerequisitos="AGRO085" id="AGRO100">PRÁCTICA DE CADENAS AGROALIMENTARIAS (5 SCT)</div>
-      <div class="ramo" data-prerequisitos="ICML035" id="CAEV092">BOTÁNICA AGRÍCOLA (4 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="CIDI024">INGLÉS (3 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="DYRE070">EDUCACIÓN FÍSICA Y SALUD (2 SCT)</div>
-      <div class="ramo" data-prerequisitos="" id="EAGR150">ECONOMÍA APLICADA (5 SCT)</div>
-      <div class="ramo" data-prerequisitos="MATM037" id="MATM124">CÁLCULO (7 SCT)</div>
-      <div class="ramo" data-prerequisitos="QUIM040" id="QUIM125">QUÍMICA ORGÁNICA (6 SCT)</div>
-    </div>
-    <!-- Agrega más semestres según lo necesites... -->
-  </div>
+<div class="semestres">
+    <!-- ... tus div .semestre aquí ... -->
+</div>
 
-  <h2>Total de Créditos Aprobados</h2>
-  <div id="total-sct">0 SCT aprobados de 0 totales</div>
+<h2>Total de Créditos Aprobados</h2>
+<div id="total-sct">0 SCT aprobados de 0 totales</div>
 
-  <script>
+<script>
     const ramos = document.querySelectorAll('.ramo');
 
-    function extraerSCT(texto) {
-      const match = texto.match(/\((\d+)\s*SCT\)/);
-      return match ? parseInt(match[1]) : 0;
-    }
-
     function calcularTotalSCT() {
-      let totalSCT = 0;
-      ramos.forEach(ramo => {
-        totalSCT += extraerSCT(ramo.textContent);
-      });
-      return totalSCT;
+        let totalSCT = 0;
+        ramos.forEach(ramo => {
+            const match = ramo.textContent.match(/\((\d+)\s*SCT\)/);
+            if (match) totalSCT += parseInt(match[1]);
+        });
+        return totalSCT;
     }
 
     function actualizarTotalSCT() {
-      let aprobados = 0;
-      const total = calcularTotalSCT();
-      ramos.forEach(ramo => {
-        if (ramo.classList.contains("aprobado")) {
-          aprobados += extraerSCT(ramo.textContent);
-        }
-      });
-      document.getElementById("total-sct").textContent = `${aprobados} SCT aprobados de ${total} totales`;
-    }
-
-    function actualizarEstados() {
-      ramos.forEach(ramo => {
-        ramo.classList.remove("habilitado");
-
-        if (ramo.classList.contains("aprobado")) return;
-
-        const prereqStr = ramo.dataset.prerequisitos;
-        const prereqs = prereqStr
-          ? prereqStr.split(',').map(p => p.trim()).filter(Boolean)
-          : [];
-
-        const faltantes = prereqs.filter(p => localStorage.getItem(p) !== "true");
-
-        if (faltantes.length === 0) {
-          ramo.classList.add("habilitado");
-          ramo.title = "";
-        } else {
-          ramo.title = "Faltan prerrequisitos: " + faltantes.join(", ");
-        }
-      });
-    }
-
-    function toggleAprobado(elem) {
-      const id = elem.id;
-
-      if (!elem.classList.contains("habilitado") && !elem.classList.contains("aprobado")) {
-        alert("Debes aprobar los prerrequisitos primero.");
-        return;
-      }
-
-      const aprobado = elem.classList.contains("aprobado");
-
-      if (aprobado) {
-        elem.classList.remove("aprobado");
-        localStorage.setItem(id, "false");
-      } else {
-        elem.classList.add("aprobado");
-        localStorage.setItem(id, "true");
-      }
-
-      actualizarEstados();
-      actualizarTotalSCT();
+        let aprobados = 0;
+        const total = calcularTotalSCT();
+        ramos.forEach(ramo => {
+            if (ramo.classList.contains("aprobado")) {
+                const match = ramo.textContent.match(/\((\d+)\s*SCT\)/);
+                if (match) aprobados += parseInt(match[1]);
+            }
+        });
+        document.getElementById("total-sct").textContent = `${aprobados} SCT aprobados de ${total} totales`;
     }
 
     function cargarEstado() {
-      ramos.forEach(ramo => {
-        const id = ramo.id;
-        const aprobado = localStorage.getItem(id);
-        if (aprobado === "true") {
-          ramo.classList.add("aprobado");
-        }
+        ramos.forEach(ramo => {
+            const id = ramo.id;
+            if (localStorage.getItem(id) === "true") {
+                ramo.classList.add("aprobado");
+            }
+        });
+        actualizarEstados();
+        actualizarTotalSCT();
+    }
 
-        ramo.addEventListener("click", () => toggleAprobado(ramo));
-      });
-      actualizarEstados();
-      actualizarTotalSCT();
+    function toggleAprobado(elem) {
+        const id = elem.id;
+        const aprobado = elem.classList.contains("aprobado");
+        elem.classList.toggle("aprobado", !aprobado);
+        localStorage.setItem(id, !aprobado);
+        actualizarEstados();
+        actualizarTotalSCT();
+    }
+
+    function actualizarEstados() {
+        ramos.forEach(ramo => {
+            if (ramo.classList.contains("aprobado")) return;
+            const prereqs = ramo.dataset.prerequisitos.split(',').filter(p => p);
+            const cumplidos = prereqs.every(p => localStorage.getItem(p) === "true");
+            ramo.classList.toggle("habilitado", prereqs.length === 0 || cumplidos);
+        });
     }
 
     window.onload = cargarEstado;
-  </script>
+</script>
 </body>
-</html>
