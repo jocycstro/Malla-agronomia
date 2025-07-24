@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Malla Curricular Agronomía</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fdfcf8;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #556b2f;
+    }
+    .semestres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .semestre {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 10px;
+        width: 250px;
+    }
+    .semestre h2 {
+        text-align: center;
+        color: #333;
+    }
+    .ramo {
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #cccccc;
+        color: #000;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .ramo.habilitado { background-color: #f5f5dc; }
+    .ramo.aprobado { background-color: #556b2f; color: #fff; text-decoration: line-through; }
+    .ramo:hover {
+        opacity: 0.9;
+    }
+    body::before, body::after {
+        content: "";
+        background-image: url('https://i.imgur.com/dLQIv4n.png');
+        background-repeat: no-repeat;
+        background-size: 150px;
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: -1;
+    }
+    body::before {
+        top: 0;
+        left: 0;
+    }
+    body::after {
+        bottom: 0;
+        right: 0;
+    }
+    #total-sct {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 20px;
+        background: #eef4ea;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<h1>Malla Curricular de Agronomía</h1>
+<div class="semestres">
+<div class="semestre"><h2>I° semestre</h2>
+<div class="ramo" data-prerequisitos="" id="AGRO085" onclick="toggleAprobado(this)">PRÁCTICA DE INDUCCIÓN PROFESIONAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="CIDI115" onclick="toggleAprobado(this)">EXPRESIÓN ORAL Y ESCRITA (2 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="CITI045" onclick="toggleAprobado(this)">PRINCIPIOS DE GEOGRAFÍA FÍSICA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ICML035" onclick="toggleAprobado(this)">FUNDAMENTOS DE BIOLOGÍA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="MATM037" onclick="toggleAprobado(this)">ÁLGEBRA (6 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="QUIM040" onclick="toggleAprobado(this)">QUÍMICA GENERAL (6 SCT)</div>
+</div>
+<div class="semestre"><h2>II° semestre</h2>
+<div class="ramo" data-prerequisitos="AGRO085" id="AGRO100" onclick="toggleAprobado(this)">PRÁCTICA DE CADENAS AGROALIMENTARIAS (5 SCT)</div>
+<div class="ramo" data-prerequisitos="ICML035" id="CAEV092" onclick="toggleAprobado(this)">BOTÁNICA AGRÍCOLA (4 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="CIDI024" onclick="toggleAprobado(this)">INGLÉS (3 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="DYRE070" onclick="toggleAprobado(this)">EDUCACIÓN FÍSICA Y SALUD (2 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="EAGR150" onclick="toggleAprobado(this)">ECONOMÍA APLICADA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="MATM037" id="MATM124" onclick="toggleAprobado(this)">CÁLCULO (7 SCT)</div>
+<div class="ramo" data-prerequisitos="QUIM040" id="QUIM125" onclick="toggleAprobado(this)">QUÍMICA ORGÁNICA (6 SCT)</div>
+</div>
+<div class="semestre"><h2>III° semestre</h2>
+<div class="ramo" data-prerequisitos="AGRO100" id="AGRO160" onclick="toggleAprobado(this)">PRÁCTICA DE LA ESPECIALIDAD (4 SCT)</div>
+<div class="ramo" data-prerequisitos="QUIM125" id="BIMI125" onclick="toggleAprobado(this)">BIOQUÍMICA (6 SCT)</div>
+<div class="ramo" data-prerequisitos="CIDI024" id="CIDI093" onclick="toggleAprobado(this)">INGLÉS II (3 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="EAGR140" onclick="toggleAprobado(this)">TALLER DE LIDERAZGO Y EMPRENDIMIENTO (2 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT30" onclick="toggleAprobado(this)">ELECTIVO DE BACHILLERATO 1 (4 SCT)</div>
+<div class="ramo" data-prerequisitos="CITI045" id="PSVE100" onclick="toggleAprobado(this)">AGROECOLOGÍA (4 SCT)</div>
+<div class="ramo" data-prerequisitos="ICML035" id="PSVE155" onclick="toggleAprobado(this)">GENÉTICA (5 SCT)</div>
+</div>
+<div class="semestre"><h2>IV° semestre</h2>
+<div class="ramo" data-prerequisitos="AGRO160" id="AGRO177" onclick="toggleAprobado(this)">PRINCIPIOS DE INGENIERÍA DE PROCESOS AGROALIMENTARIOS (3 SCT)</div>
+<div class="ramo" data-prerequisitos="BIMI125" id="BIMI118" onclick="toggleAprobado(this)">MICROBIOLOGÍA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT31" onclick="toggleAprobado(this)">ELECTIVO DE BACHILLERATO 2 (4 SCT)</div>
+<div class="ramo" data-prerequisitos="MATM124" id="FSCA099" onclick="toggleAprobado(this)">FÍSICA (4 SCT)</div>
+<div class="ramo" data-prerequisitos="BIMI125" id="PRAN122" onclick="toggleAprobado(this)">FISIOLOGÍA ANIMAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="PRAN175" onclick="toggleAprobado(this)">SISTEMAS AGROALIMENTARIOS (5 SCT)</div>
+<div class="ramo" data-prerequisitos="BIMI125" id="PSVE165" onclick="toggleAprobado(this)">FISIOLOGÍA VEGETAL (5 SCT)</div>
+</div>
+<div class="semestre"><h2>V° semestre</h2>
+<div class="ramo" data-prerequisitos="" id="AGRO193" onclick="toggleAprobado(this)">PRÁCTICA DE HABILIDADES Y DESTREZAS I (5 SCT)</div>
+<div class="ramo" data-prerequisitos="EAGR150" id="EAGR170" onclick="toggleAprobado(this)">MARKETING AGROALIMENTARIO (5 SCT)</div>
+<div class="ramo" data-prerequisitos="CITI045" id="IIAS134" onclick="toggleAprobado(this)">EDAFOLOGÍA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="FSCA099" id="IIAS136" onclick="toggleAprobado(this)">INGENIERÍA AGRÍCOLA (0 SCT)</div>
+<div class="ramo" data-prerequisitos="PRAN122" id="PRAN130" onclick="toggleAprobado(this)">NUTRICIÓN ANIMAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PSVE165" id="PSVE146" onclick="toggleAprobado(this)">ECOFISIOLOGÍA DE CULTIVOS (5 SCT)</div>
+</div>
+<div class="semestre"><h2>VI° semestre</h2>
+<div class="ramo" data-prerequisitos="" id="AGRO195" onclick="toggleAprobado(this)">PRÁCTICA DE HABILIDADES Y DESTREZAS II (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT20" onclick="toggleAprobado(this)">OPTATIVO PROFESIONAL 1 (2 SCT)</div>
+<div class="ramo" data-prerequisitos="PSVE146" id="IIAS138" onclick="toggleAprobado(this)">FERTILIDAD Y FERTILIZANTES (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="IIAS142" onclick="toggleAprobado(this)">RECURSOS NATURALES (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PRAN130" id="PRAN132" onclick="toggleAprobado(this)">ALIMENTACIÓN ANIMAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="PSVE144" onclick="toggleAprobado(this)">PATOLOGÍA VEGETAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="ICML035" id="PSVE148" onclick="toggleAprobado(this)">ENTOMOLOGÍA (4 SCT)</div>
+</div>
+<div class="semestre"><h2>VII° semestre</h2>
+<div class="ramo" data-prerequisitos="" id="EAGR172" onclick="toggleAprobado(this)">ADMINISTRACIÓN AGRÍCOLA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="EAGR174" onclick="toggleAprobado(this)">DESARROLLO RURAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT21" onclick="toggleAprobado(this)">OPTATIVO PROFESIONAL 2 (5 SCT)</div>
+<div class="ramo" data-prerequisitos="IIAS134" id="IIAS140" onclick="toggleAprobado(this)">RIEGO Y DRENAJE (5 SCT)</div>
+<div class="ramo" data-prerequisitos="IIAS138" id="PRAN134" onclick="toggleAprobado(this)">MANEJO DE PRADERAS (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="PSVE199" onclick="toggleAprobado(this)">ANÁLISIS DE DATOS Y ESTADÍSTICA AGROALIMENTARIA (4 SCT)</div>
+</div>
+<div class="semestre"><h2>VIII° semestre</h2>
+<div class="ramo" data-prerequisitos="" id="AGRO295" onclick="toggleAprobado(this)">ANTEPROYECTO DE INVESTIGACIÓN (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="EAGR176" onclick="toggleAprobado(this)">FORMULACIÓN Y EVALUACIÓN DE PROYECTOS (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PRAN132" id="PRAN202" onclick="toggleAprobado(this)">PRODUCCIÓN ANIMAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PSVE148,PSVE144" id="PSVE170" onclick="toggleAprobado(this)">MANEJO DE PLAGAS, ENFERMEDADES Y MALEZAS (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PSVE146" id="PSVE172" onclick="toggleAprobado(this)">FRUTICULTURA (5 SCT)</div>
+<div class="ramo" data-prerequisitos="PSVE146" id="PSVE218" onclick="toggleAprobado(this)">FITOTECNIA (5 SCT)</div>
+</div>
+<div class="semestre"><h2>IX° semestre</h2>
+<div class="ramo" data-prerequisitos="AGRO295,PSVE218,EAGR176,PSVE172,PSVE170,PRAN202" id="AGRO199" onclick="toggleAprobado(this)">PRÁCTICA PROFESIONAL (5 SCT)</div>
+<div class="ramo" data-prerequisitos="AGRO295,PSVE218,EAGR176,PSVE172,PSVE170,PRAN202" id="AGRO210" onclick="toggleAprobado(this)">GIRA DE ESTUDIOS DE SISTEMAS AGROPECUARIOS (6 SCT)</div>
+<div class="ramo" data-prerequisitos="EAGR140" id="EAGR218" onclick="toggleAprobado(this)">TALLER DE EMPLEO Y EMPRENDIMIENTO (2 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT71" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 1 (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT72" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 2 (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT73" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 3 (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT74" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 4 (5 SCT)</div>
+</div>
+<div class="semestre"><h2>X° semestre</h2>
+<div class="ramo" data-prerequisitos="Muchos prerequisitos (ver documento)" id="AGRO297" onclick="toggleAprobado(this)">MEMORIA DE TÍTULO (20 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT75" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 5 (5 SCT)</div>
+<div class="ramo" data-prerequisitos="" id="ELECT76" onclick="toggleAprobado(this)">OPTATIVO PROFUNDIZACIÓN 6 (5 SCT)</div>
+</div>
+</div>
+<script>
+<h2>Total de Créditos Aprobados</h2>
+<div id="total-sct">0 SCT aprobados de 0 totales</div>
+
+<script>
+    const ramos = document.querySelectorAll('.ramo');
+
+    function calcularTotalSCT() {
+        let totalSCT = 0;
+        ramos.forEach(ramo => {
+            const texto = ramo.textContent;
+            const match = texto.match(/\((\d+)\s*SCT\)/);
+            if (match) {
+                totalSCT += parseInt(match[1]);
+            }
+        });
+        return totalSCT;
+    }
+
+    function actualizarTotalSCT() {
+        let aprobados = 0;
+        const total = calcularTotalSCT();
+        ramos.forEach(ramo => {
+            if (ramo.classList.contains("aprobado")) {
+                const texto = ramo.textContent;
+                const match = texto.match(/\((\d+)\s*SCT\)/);
+                if (match) {
+                    aprobados += parseInt(match[1]);
+                }
+            }
+        });
+        document.getElementById("total-sct").textContent = `${aprobados} SCT aprobados de ${total} totales`;
+    }
+
+    function cargarEstado() {
+        ramos.forEach(ramo => {
+            const id = ramo.id;
+            const aprobado = localStorage.getItem(id);
+            if (aprobado === "true") {
+                ramo.classList.add("aprobado");
+            }
+        });
+        actualizarEstados();
+        actualizarTotalSCT();
+    }
+
+    function toggleAprobado(elem) {
+        const id = elem.id;
+        const aprobado = elem.classList.contains("aprobado");
+        if (aprobado) {
+            elem.classList.remove("aprobado");
+            localStorage.setItem(id, "false");
+        } else {
+            elem.classList.add("aprobado");
+            localStorage.setItem(id, "true");
+        }
+        actualizarEstados();
+        actualizarTotalSCT();
+    }
+
+    function actualizarEstados() {
+        ramos.forEach(ramo => {
+            if (ramo.classList.contains("aprobado")) return;
+            const prereqs = ramo.dataset.prerequisitos.split(',').filter(p => p);
+            const cumplidos = prereqs.every(p => localStorage.getItem(p) === "true");
+            if (prereqs.length === 0 || cumplidos) {
+                ramo.classList.add("habilitado");
+            } else {
+                ramo.classList.remove("habilitado");
+            }
+        });
+    }
+
+    window.onload = cargarEstado;
+</script>
+</body>
+</html>
